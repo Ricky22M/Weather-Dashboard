@@ -2,22 +2,104 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Library of Congress</title>
-        <link rel="stylesheet" type="text/css" href="./Assets/CSS/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Weather Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="./Assets/CSS/style.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"/>
     </head>
     <body>
-        <header>
-            <h1>Search</h1>
+        <header class="jumbotron jumbotron-fluid text-center bg-dark">
+            <h1 class="text-white">Weather Dashboard</h1>
         </header>
-        <main>
-            <section>
-                
-            </section>
+        <main class="container-fluid">
+            <aside id="leftContent" class="container row">
+                <form class="col-3 mb-3">
+                    <label for="searchCityInput">Search For Weather by City</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary text-white bg-dark" type="button">Search</button>
+                          <!-- maybe adding a onclick request in the button element to get api -->
+                        </div>
+                    </div>
+                </form>
+                <ul id="lastSearched">
+                    <!-- Here should create buttons for the user to visit from their previous searches -->
+                </ul>
+            </aside>
+            <aside id="rightContent" class=" col container mr-1">
+                <div class="card border border-dark card-body">
+                    <!-- Add current date -->
+                    <div class="card-body bg-dark text-white">
+                        <h3 id="cardDate" class="card-title text-center pt-2">Date</h3>
+                    </div>
+                    <h3 id="cityCard" class="card-title">City</h3>
+                    <p id="temperature" class="card-text">Temp: </p>
+                    <p id="wind" class="card-text">Wind: </p>
+                    <p id="humidity" class="card-text">Humidity: </p>
+                    <p id="uvIndex" class="card-text">UV Index: </p>
+                </div>
+                <!-- Watch out for the div below -->
+                <div class="card-group">
+                    <div class="card border border-dark m-2 fiveCard">
+                        <div class="border border-dark bg-dark text-white">
+                            <h4 id="cardDateOne" class="card-title text-center pt-2">Date</h4>
+                        </div>
+                        <div class="card-body">
+                            <p id="cardOneTemperature" class="card-text">Temp: </p>
+                            <p id="cardOneWind" class="card-text">Wind: </p>
+                            <p id="cardOneHumidity" class="card-text">Humidity: </p>
+                            <p id="cardOneUVIndex" class="card-text">UV Index; </p>
+                        </div>
+                    </div>
+                    <div class="card border border-dark m-2 fiveCard">
+                        <div class="border border-dark bg-dark text-white">
+                            <h4 id="cardDateTwo" class="card-title text-center pt-2">Date</h4>
+                        </div>
+                        <div class="card-body">
+                            <p id="cardTwoTemperature" class="card-text">Temp: </p>
+                            <p id="cardTwoWind" class="card-text">Wind: </p>
+                            <p id="cardTwoHumidity" class="card-text">Humidity: </p>
+                            <p id="cardTwoUVIndex" class="card-text">UV Index; </p>
+                        </div>
+                    </div>
+                    <div class="card border border-dark m-2 fiveCard">
+                        <div class="border border-dark bg-dark text-white">
+                            <h4 id="cardDateThree" class="card-title text-center pt-2">Date</h4>
+                        </div>
+                        <div class="card-body">
+                            <p id="cardThreeTemperature" class="card-text">Temp: </p>
+                            <p id="cardThreeWind" class="card-text">Wind: </p>
+                            <p id="cardThreeHumidity" class="card-text">Humidity: </p>
+                            <p id="cardThreeUVIndex" class="card-text">UV Index; </p>
+                        </div>
+                    </div>
+                    <div class="card border border-dark m-2 fiveCard">
+                        <div class="border border-dark bg-dark text-white">
+                            <h4 id="cardDateFour" class="card-title text-center pt-2">Date</h4>
+                        </div>
+                        <div class="card-body">
+                            <p id="cardFourTemperature" class="card-text">Temp: </p>
+                            <p id="cardFourWind" class="card-text">Wind: </p>
+                            <p id="cardFourHumidity" class="card-text">Humidity: </p>
+                            <p id="cardFourUVIndex" class="card-text">UV Index; </p>
+                        </div>
+                    </div>
+                    <div class="card border border-dark m-2 fiveCard">
+                        <div class="border border-dark bg-dark text-white">
+                            <h4 id="cardDateFive" class="card-title text-center pt-2">Date</h4>
+                        </div>
+                        <div class="card-body">
+                            <p id="cardFiveTemperature" class="card-text">Temp: </p>
+                            <p id="cardFiveWind" class="card-text">Wind: </p>
+                            <p id="cardFiveHumidity" class="card-text">Humidity: </p>
+                            <p id="cardFiveUVIndex" class="card-text">UV Index; </p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </main>
-        <footer>
-            <p>Blank</p>
-        </footer>
         <script src="./Assets/JS/script.js"></script>
     </body>
 </html>
