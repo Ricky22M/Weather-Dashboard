@@ -64,3 +64,31 @@ async function citySearch(city) {
         });
 }
 
+// The five day api call
+async function fiveDayCitySearch(city) {
+    requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city.split(' ').join('+')},US&appid=${apiKey}&units=imperial`;
+    await fetch(requestUrl)
+        .then(function (response) {
+            if (response.status === 404) {
+                console.log("Invalid city name");
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            // Used to find the next five days' weather
+            for (let i = 0; i < 5; i++) {
+                if (i === 0) {
+                    reviseFiveDay(i, data.list[4].dt_txt.split(' ')[0], data.list[4].main.temp, data.list[4].wind.speed, data.list[4].main.humidity);
+                } else if (i === 1) {
+                    reviseFiveDay(i, data.list[12].dt_txt.split(' ')[0], data.list[12].main.temp, data.list[12].wind.speed, data.list[12].main.humidity);
+                }else if (i === 1) {
+                    reviseFiveDay(i, data.list[20].dt_txt.split(' ')[0], data.list[20].main.temp, data.list[20].wind.speed, data.list[20].main.humidity);
+                } else if (i === 3) {
+                    reviseFiveDay(i, data.list[28].dt_txt.split(' ')[0], data.list[28].main.temp, data.list[28].wind.speed, data.list[28].main.humidity);
+                } else if (i === 4) {
+                    reviseFiveDay(i, data.list[36].dt_txt.split(' ')[0], data.list[36].main.temp, data.list[36].wind.speed, data.list[36].main.humidity);
+                }
+            }
+        });
+}
+
