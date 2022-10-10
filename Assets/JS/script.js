@@ -101,7 +101,7 @@ async function uvIndex(lat, lon) {
             return response.json();
         })
         .then(function (data) {
-            uv.text(`UV Index: $(data.value)`);
+            uv.text(`UV Index: ${data.value}`);
         });
 }
 
@@ -118,5 +118,37 @@ function getAPIRequest() {
     citySearch(allSearches);
     previouslySearchedHistory();
     previousCityBtn();
+}
+
+// Shows the user their search weather history and saves it to their local storage
+function previouslySearchedHistory() {
+    var saveCity = true;
+    previouslySearched.forEach(search => {
+        if (search === allSearches) {
+            saveCity = false;
+        }
+    });
+    if (saveCity === true) {
+        previouslySearched.unshift(allSearches);
+    }
+    localStorage.setItem("previosCities", JSON.stringify(previouslySearched));
+}
+
+// This will help to clear saved search history
+function endButton() {
+    lastSearchedBtn.empty();
+}
+
+// Creates a button for each city searched
+function createButton() {
+    endButton();
+    for (let i = 0; i < previouslySearched.length; i++) {
+        var cityButton = $('<button>');
+        cityButton.attr('class', 'btn btn-outline-secondary text-white bg-dark m-1');
+        cityButton.attr('type', 'button');
+        cityButton.text(previouslySearched[i]);
+        cityButton.attr('onclick', `citySearch("${previouslySearched[i]}")`);
+        lastSearchedBtn.append(cityButton);
+    }
 }
 
