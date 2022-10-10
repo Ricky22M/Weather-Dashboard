@@ -26,11 +26,9 @@ if (JSON.parse(localStorage.getItem("previousCities")) !== null) {
     previouslySearched = JSON.parse(localStorage.getItem("previousCities"));
 }
 
-// Uses API key and 
+// Uses API key and helps to create weather cards
 async function citySearch(city) {
-    //
     requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city.split(' ').join('+')},US&appid=${apiKey}&units=imperial`;
-    
     await fetch(requestUrl)
         .then(function (response) {
             // Used if a city is invalid
@@ -60,12 +58,12 @@ async function citySearch(city) {
             // calls the "reviseCard" function, the "uvIndex" fucntion, and the "fiveDay" function
             reviseCard(data.name, data.main.temp, data.main.humidity, data.weather[0].description);
             uvIndex(data.coord.lat, data.coord.lon);
-            fiveDayCitySearch(data.name);
+            fiveDayCityWeather(data.name);
         });
 }
 
-// The five day api call
-async function fiveDayCitySearch(city) {
+// The five day API call
+async function fiveDayCityWeather(city) {
     requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city.split(' ').join('+')},US&appid=${apiKey}&units=imperial`;
     await fetch(requestUrl)
         .then(function (response) {
@@ -90,5 +88,35 @@ async function fiveDayCitySearch(city) {
                 }
             }
         });
+}
+
+// UV Index API call
+async function uvIndex(lat, lon) {
+    var requestUrl = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    await fetch (requestUrl)
+        .then(function (response) {
+            if (response.status === 404) {
+                console.log("Invalid city name");
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            uv.text(`UV Index: $(data.value)`);
+        });
+}
+
+// Gives results
+$('#searchForCity').on("keyup", function (e) {
+    if (e.keyCode == 13) {
+        getAPIRequest();
+    }
+});
+
+// Used to call api weather key, add all updates to last searched cities, and calls function to show previous searches
+function getAPIRequest() {
+    allSearches = $('#searchForCity').val();
+    citySearch(allSearches);
+    previouslySearchedHistory();
+    previousCityBtn();
 }
 

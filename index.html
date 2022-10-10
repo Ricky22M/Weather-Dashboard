@@ -17,10 +17,9 @@
                 <form class="col-3 mb-3">
                     <label for="searchCityInput">Search For Weather by City</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" aria-describedby="basic-addon2">
+                        <input id="searchForCity" type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                          <button class="btn btn-outline-secondary text-white bg-dark" type="button">Search</button>
-                          <!-- maybe adding a onclick request in the button element to get api -->
+                          <button class="btn btn-outline-secondary text-white bg-dark" type="button" onclick="getAPIRequest()">Search</button>
                         </div>
                     </div>
                 </form>
