@@ -56,8 +56,8 @@ async function citySearch(city) {
         // revise inital card
         .then(function (data) {
             // calls the "reviseCard" function, the "uvIndex" fucntion, and the "fiveDay" function
-            reviseCard(data.name, data.main.temp, data.main.humidity, data.weather[0].description);
-            uvIndex(data.coord.lat, data.coord.lon);
+            revisedCard(data.name, data.main.temp, data.main.humidity, data.weather[0].description);
+            uv(data.coord.lat, data.coord.lon);
             fiveDayCityWeather(data.name);
         });
 }
@@ -76,22 +76,22 @@ async function fiveDayCityWeather(city) {
             // Used to find the next five days' weather
             for (let i = 0; i < 5; i++) {
                 if (i === 0) {
-                    reviseFiveDay(i, data.list[4].dt_txt.split(' ')[0], data.list[4].main.temp, data.list[4].wind.speed, data.list[4].main.humidity);
+                    fiveCards(i, data.list[4].dt_txt.split(' ')[0], data.list[4].main.temp, data.list[4].wind.speed, data.list[4].main.humidity);
                 } else if (i === 1) {
-                    reviseFiveDay(i, data.list[12].dt_txt.split(' ')[0], data.list[12].main.temp, data.list[12].wind.speed, data.list[12].main.humidity);
+                    fiveCards(i, data.list[12].dt_txt.split(' ')[0], data.list[12].main.temp, data.list[12].wind.speed, data.list[12].main.humidity);
                 }else if (i === 1) {
-                    reviseFiveDay(i, data.list[20].dt_txt.split(' ')[0], data.list[20].main.temp, data.list[20].wind.speed, data.list[20].main.humidity);
+                    fiveCards(i, data.list[20].dt_txt.split(' ')[0], data.list[20].main.temp, data.list[20].wind.speed, data.list[20].main.humidity);
                 } else if (i === 3) {
-                    reviseFiveDay(i, data.list[28].dt_txt.split(' ')[0], data.list[28].main.temp, data.list[28].wind.speed, data.list[28].main.humidity);
+                    fiveCards(i, data.list[28].dt_txt.split(' ')[0], data.list[28].main.temp, data.list[28].wind.speed, data.list[28].main.humidity);
                 } else if (i === 4) {
-                    reviseFiveDay(i, data.list[36].dt_txt.split(' ')[0], data.list[36].main.temp, data.list[36].wind.speed, data.list[36].main.humidity);
+                    fiveCards(i, data.list[36].dt_txt.split(' ')[0], data.list[36].main.temp, data.list[36].wind.speed, data.list[36].main.humidity);
                 }
             }
         });
 }
 
 // UV Index API call
-async function uvIndex(lat, lon) {
+async function uv(lat, lon) {
     var requestUrl = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`
     await fetch (requestUrl)
         .then(function (response) {
@@ -152,3 +152,26 @@ function createButton() {
     }
 }
 
+// Updates and changes made to the main card
+function revisedCard(city, temperature, wind, humidity,) {
+    city.text(`${city}`);
+    temperature.text(`${temperature}°F`);
+    wind.text(`${wind}MPH`);
+    humidity.text(`${humidity}%`);
+}
+
+// Update and changes made to the last five cards
+function fiveCards(index, date, temp, wind, humidity,) {
+    var fiveCardDate = $(`#cardDate${index}`);
+    var fiveCardTemperature = $(`#cardTemperature${index}`);
+    var fiveCardWind = $(`#cardWind${index}`);
+    var fiveCardHumidity = $(`#cardHumidity${index}`);
+
+    fiveCardDate.text(`${date}`);
+    fiveCardTemperature.text(`${temperature}°F`);
+    fiveCardWind.text(`${wind}MPH`);
+    fiveCardHumidity.text(`${humidity}%`);
+}
+
+//Loads local storage buttons
+createButton();
