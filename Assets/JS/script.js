@@ -1,25 +1,31 @@
 /* DECLARED VARIABLES */
 
+// Current Date
+var currentDate = moment().format('l')
+
 // Cities lasted searched
 var previouslySearched = [];
 
 // Buttons for the previous user searches
-var lastSearchedBtn = $('lastedSearched');
+var lastSearchedBtn = $('#lastedSearched');
 
 // API key being used 
 var apiKey = '4d63ba9d93efddcbcaf8047f7d2ec8b0';
 
 // Main card attributes
-var city = $('#cityCard');
-var temperature = $('#temperature');
-var wind = $('#wind');
-var humidity = $('#humidity');
-var uv = $('#uvIndex');
+var cityName = $('#cityCard');
+var tempOfCity = $('#temp');
+var windOfCity = $('#wind');
+var humidityOfCity = $('#humidity');
+var uvIndexOfCity = $('#uvIndex');
 
 // User can search for all current city name terms
 var allSearches;
 
 /* FUNCTIONS */
+
+// Used to show the current date
+$('#currentDay').text(currentDate);
 
 // If saved local storage data already exists, then display in the "previouslySeached" array
 if (JSON.parse(localStorage.getItem("previousCities")) !== null) {
@@ -41,15 +47,6 @@ async function citySearch(city) {
                 aside.attr("id", "test");
                 aside.attr("Invalid city name");
                 asideEl.append(alert);
-            } else (response === 202) {
-                setInterval(function () {
-                    if (alert.css('opacity') < 0.1) {
-                        alert.remove();
-                        clearInterval();
-                    } else {
-                        alert.css('opacity', `${alert.css('opacity') - 0.1}`);
-                    }
-                }, 150);
             }
             return response.json();
         })
@@ -57,7 +54,7 @@ async function citySearch(city) {
         .then(function (data) {
             // calls the "reviseCard" function, the "uvIndex" fucntion, and the "fiveDay" function
             revisedCard(data.name, data.main.temp, data.main.humidity, data.weather[0].description);
-            uv(data.coord.lat, data.coord.lon);
+            uvInfo(data.coord.lat, data.coord.lon);
             fiveDayCityWeather(data.name);
         });
 }
@@ -74,12 +71,12 @@ async function fiveDayCityWeather(city) {
         })
         .then(function (data) {
             // Used to find the next five days' weather
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 6; i++) {
                 if (i === 0) {
                     fiveCards(i, data.list[4].dt_txt.split(' ')[0], data.list[4].main.temp, data.list[4].wind.speed, data.list[4].main.humidity);
                 } else if (i === 1) {
                     fiveCards(i, data.list[12].dt_txt.split(' ')[0], data.list[12].main.temp, data.list[12].wind.speed, data.list[12].main.humidity);
-                }else if (i === 1) {
+                } else if (i === 2) {
                     fiveCards(i, data.list[20].dt_txt.split(' ')[0], data.list[20].main.temp, data.list[20].wind.speed, data.list[20].main.humidity);
                 } else if (i === 3) {
                     fiveCards(i, data.list[28].dt_txt.split(' ')[0], data.list[28].main.temp, data.list[28].wind.speed, data.list[28].main.humidity);
@@ -91,7 +88,7 @@ async function fiveDayCityWeather(city) {
 }
 
 // UV Index API call
-async function uv(lat, lon) {
+async function uvInfo(lat, lon) {
     var requestUrl = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`
     await fetch (requestUrl)
         .then(function (response) {
@@ -101,7 +98,7 @@ async function uv(lat, lon) {
             return response.json();
         })
         .then(function (data) {
-            uv.text(`UV Index: ${data.value}`);
+            uvIndexOfCity.text(`UV Index: ${data.value}`);
         });
 }
 
@@ -117,7 +114,7 @@ function getAPIRequest() {
     allSearches = $('#searchForCity').val();
     citySearch(allSearches);
     previouslySearchedHistory();
-    previousCityBtn();
+    createButton();
 }
 
 // Shows the user their search weather history and saves it to their local storage
@@ -153,24 +150,24 @@ function createButton() {
 }
 
 // Updates and changes made to the main card
-function revisedCard(city, temperature, wind, humidity,) {
-    city.text(`${city}`);
-    temperature.text(`${temperature}°F`);
-    wind.text(`${wind}MPH`);
-    humidity.text(`${humidity}%`);
+function revisedCard(city, temp, wind, humidity) {
+    cityName.text(`${city}`);
+    tempOfCity.text(`Temp: ${temp}°F`);
+    windOfCity.text(`Wind: ${wind} MPH`);
+    humidityOfCity.text(`Humidity: ${humidity}%`);
 }
 
 // Update and changes made to the last five cards
-function fiveCards(index, date, temp, wind, humidity,) {
+function fiveCards(index, date, temp, wind, humidity) {
     var fiveCardDate = $(`#cardDate${index}`);
-    var fiveCardTemperature = $(`#cardTemperature${index}`);
+    var fiveCardTemp = $(`#cardTemp${index}`);
     var fiveCardWind = $(`#cardWind${index}`);
     var fiveCardHumidity = $(`#cardHumidity${index}`);
 
     fiveCardDate.text(`${date}`);
-    fiveCardTemperature.text(`${temperature}°F`);
-    fiveCardWind.text(`${wind}MPH`);
-    fiveCardHumidity.text(`${humidity}%`);
+    fiveCardTemp.text(`Temp: ${temp}°F`);
+    fiveCardWind.text(`Wind: ${wind}MPH`);
+    fiveCardHumidity.text(`Humidity: ${humidity}%`);
 }
 
 //Loads local storage buttons
