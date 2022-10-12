@@ -7,7 +7,7 @@ var currentDate = moment().format('l')
 var previouslySearched = [];
 
 // Buttons for the previous user searches
-var lastSearchedBtn = $('#lastedSearched');
+var lastSearchedBtn = $('#lastSearched');
 
 // API key being used 
 var apiKey = '4d63ba9d93efddcbcaf8047f7d2ec8b0';
@@ -53,7 +53,7 @@ async function citySearch(city) {
         // revise inital card
         .then(function (data) {
             // calls the "reviseCard" function, the "uvIndex" fucntion, and the "fiveDay" function
-            revisedCard(data.name, data.main.temp, data.main.humidity, data.weather[0].description);
+            revisedCard(data.name, data.main.temp, data.wind.speed, data.main.humidity, data.weather[0].description);
             uvInfo(data.coord.lat, data.coord.lon);
             fiveDayCityWeather(data.name);
         });
@@ -163,7 +163,6 @@ function fiveCards(index, date, temp, wind, humidity) {
     var fiveCardTemp = $(`#cardTemp${index}`);
     var fiveCardWind = $(`#cardWind${index}`);
     var fiveCardHumidity = $(`#cardHumidity${index}`);
-
     fiveCardDate.text(`${date}`);
     fiveCardTemp.text(`Temp: ${temp}°F`);
     fiveCardWind.text(`Wind: ${wind}MPH`);

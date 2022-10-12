@@ -14,23 +14,24 @@
             <h1 class="text-white">Weather Dashboard</h1>
         </header>
         <main class="container-fluid">
-            <aside id="leftContent" class="container row">
-                <form class="col-3 mb-3">
+            <aside id="leftContent" class="container row col-2">
+                <form class="mb-3">
+                    <!-- Where the user will put text input -->
                     <label for="searchCityInput">Search For Weather by City</label>
-                    <div class="input-group mb-3">
-                        <input id="searchForCity" type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" aria-describedby="basic-addon2">
+                    <div id="bottomLine" class="input-group mb-3">
+                        <input id="searchForCity" type="text" class="form-control" placeholder="Enter A City Name" aria-label="City Name" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                           <button class="btn btn-outline-secondary text-white bg-dark" type="button" onclick="getAPIRequest()">Search</button>
                         </div>
                     </div>
+                    <div id="lastSearched">
+                        <!-- Here should create buttons for the user to visit from their previous searches -->
+                    </div>
                 </form>
-                <ul id="lastSearched">
-                    <!-- Here should create buttons for the user to visit from their previous searches -->
-                </ul>
             </aside>
+            <!-- The card created will show the user the date of their current day, the city name, the temperature, the wind, the humidity, and UV Index of that city -->
             <div id="rightContent" class="container col-8">
                 <div class="card border border-dark card-body">
-                    <!-- Add current date -->
                     <div class="card-body bg-dark text-white">
                         <h3 id="currentDay" class="card-title text-center pt-2">Date</h3>
                     </div>
@@ -40,6 +41,7 @@
                     <p id="humidity" class="card-text">Humidity: </p>
                     <p id="uvIndex" class="card-text">UV Index: </p>
                 </div>
+                <!-- Will show the user the weather for the next five days in smaller cards following the same attributes as the main card above -->
                 <div class="card-group">
                     <div class="card border border-dark m-2">
                         <div class="border border-dark bg-dark text-white">
